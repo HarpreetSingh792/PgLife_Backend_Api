@@ -56,3 +56,22 @@ export const deleteAmenities = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const getSearched = async(req,res,next)=>{
+  try {
+    const {q} = req.query;
+    const obj = {}
+    if(q)
+    {
+      obj.address = {$regex:q,$options:"i"};
+    }
+    const data = await Amenities.find(obj)
+    res.json({
+      success:true,
+      data
+    })
+  } catch (error) {
+    next(error)
+  }
+}
